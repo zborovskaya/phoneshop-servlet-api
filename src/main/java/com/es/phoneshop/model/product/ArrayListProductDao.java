@@ -2,7 +2,7 @@ package com.es.phoneshop.model.product;
 
 import java.util.List;
 
-public class ProductDaoImpl implements ProductDao {
+public class ArrayListProductDao implements ProductDao {
     @Override
     public Product getProduct(Long id) {
         throw new RuntimeException("Not implemented");

@@ -5,12 +5,13 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
-public class ProductDaoImplTest {
+public class ArrayListProductDaoTest
+{
     private ProductDao productDao;
 
     @Before
     public void setup() {
-        productDao = new ProductDaoImpl();
+        productDao = new ArrayListProductDao();
     }
 
     @Test
