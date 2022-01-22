@@ -49,7 +49,11 @@ public class ArrayListProductDao implements ProductDao {
     @Override
     public void save(Product product) {
         writeLock.lock();
-        if(product.getId()!= null){
+        if(product.getId()== null){
+            product.setId(++productId);
+            products.add(product);
+            writeLock.unlock();
+        }else {
             Long id = product.getId();
             for(int index = 0; index < products.size(); index++){
                 if(id.equals(products.get(index).getId())) {
@@ -58,9 +62,6 @@ public class ArrayListProductDao implements ProductDao {
                 }
             }
         }
-        product.setId(++productId);
-        products.add(product);
-        writeLock.unlock();
     }
 
     @Override
