@@ -22,7 +22,7 @@
     <p>
         Cart : ${cart}
     </p>
-    <form method="post">
+    <form method="post" action="${pageContext.servletContext.contextPath}/products/${product.id}">
         <table>
             <tr>
                 <td>Image</td>

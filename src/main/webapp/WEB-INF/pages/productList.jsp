@@ -4,13 +4,29 @@
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
 <jsp:useBean id="products" type="java.util.ArrayList" scope="request"/>
+<jsp:useBean id="recentViewed" type="java.util.ArrayList" scope="request"/>
 <tags:master pageTitle="Product List">
     <p>
         Welcome to Expert-Soft training!
     </p>
+    <c:if test="${not empty param.message}">
+        <div class="success">
+                ${param.message}
+        </div>
+    </c:if>
+    <c:if test="${not empty error}">
+        <div class="error">
+            There was an error adding to cart
+        </div>
+    </c:if>
+    <p>
+        Cart : ${cart}
+    </p>
     <form>
         <input name="query" value="${param.query}">
-        <buttoms>Search</buttoms>
+        <button>Search</button>
+    </form>
+    <form id="addCart" method="post">
     </form>
     <table>
         <thead>
@@ -21,14 +37,18 @@
                 <tags:sortLink sort="description" order="asc"></tags:sortLink>
                 <tags:sortLink sort="description" order="desc"></tags:sortLink>
             </td>
+            <td class="quantity">
+                Quantity
+            </td>
             <td class="price">
                 Price
                 <tags:sortLink sort="price" order="asc"></tags:sortLink>
                 <tags:sortLink sort="price" order="desc"></tags:sortLink>
             </td>
+            <td></td>
         </tr>
         </thead>
-        <c:forEach var="product" items="${products}">
+        <c:forEach var="product" items="${products}" varStatus="status">
             <tr>
                 <td>
                     <img class="product-tile"
@@ -39,13 +59,45 @@
                             ${product.description}
                     </a>
                 </td>
+                <td>
+                    <input name="quantity" value="${not empty error ? paramValues['quantity'][status.index] :1}"
+                           class="quantity" form="addCart">
+                    <input name="ids" value="${product.id}"
+                           type="hidden" form="addCart">
+                    <c:if test="${not empty error and product.id eq param.productId}">
+                        <div class="error">
+                                ${error}
+                        </div>
+                    </c:if>
+                </td>
                 <td class="price">
                     <a href="${pageContext.servletContext.contextPath}/products/priceHistory?productId=${product.id}">
                         <fmt:formatNumber value="${product.price}" type="currency"
                                           currencySymbol="${product.currency.symbol}"/>
                     </a>
                 </td>
+                <td>
+                    <button form="addCart"
+                            formaction="${pageContext.servletContext.contextPath}/products?productId=${product.id}">Add
+                        to cart
+                    </button>
+                </td>
             </tr>
         </c:forEach>
     </table>
+
+    <br>
+    <div class="container">
+        <ul class="nav nav-pills" role="tablist">
+            <c:forEach var="recentProduct" items="${recentViewed}">
+                <li><a href="${pageContext.servletContext.contextPath}/products/${recentProduct.id}"
+                       role="tab" data-toggle="pill">
+                        ${recentProduct.description}
+                    <p>
+                        <img class="product-tile" src=${recentProduct.imageUrl}>
+                    </p>
+                </a></li>
+            </c:forEach>
+        </ul>
+    </div>
 </tags:master>
