@@ -1,7 +1,7 @@
 package com.es.phoneshop.web;
 
 import com.es.phoneshop.model.product.bean.Cart;
-import com.es.phoneshop.model.product.service.CartService;
+import com.es.phoneshop.model.product.service.implementation.CartService;
 import com.es.phoneshop.model.product.service.CartServiceImpl;
 
 import javax.servlet.ServletConfig;

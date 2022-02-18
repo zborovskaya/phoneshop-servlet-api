@@ -4,12 +4,12 @@ import com.es.phoneshop.model.product.bean.Cart;
 import com.es.phoneshop.model.product.bean.Product;
 import com.es.phoneshop.model.product.bean.RecentViewCart;
 import com.es.phoneshop.model.product.dao.ArrayListProductDao;
-import com.es.phoneshop.model.product.dao.ProductDao;
-import com.es.phoneshop.model.product.service.CartService;
+import com.es.phoneshop.model.product.dao.implementation.ProductDao;
+import com.es.phoneshop.model.product.service.implementation.CartService;
 import com.es.phoneshop.model.product.service.CartServiceImpl;
-import com.es.phoneshop.model.product.service.RecentViewedService;
+import com.es.phoneshop.model.product.service.implementation.RecentViewedService;
 import com.es.phoneshop.model.product.service.RecentViewedServiceImpl;
-import com.es.phoneshop.model.product.service.QuantityException;
+import com.es.phoneshop.model.product.exception.QuantityException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -52,7 +52,6 @@ public class ProductDetailsPageServlet extends HttpServlet {
         String quantityString = request.getParameter(QUANTITY);
         Long productId = parseProductId(request);
         try {
-            request.getLocale();
             Cart cart = cartService.getCart(request.getSession());
             cartService.add(cart, productId, quantityString, NumberFormat.getInstance(request.getLocale()));
             response.sendRedirect(request.getContextPath() + "/products/" + productId + PRODUCT_ADDED);
@@ -69,8 +68,8 @@ public class ProductDetailsPageServlet extends HttpServlet {
     private void setAttribute(HttpServletRequest request) {
         HttpSession httpSession = request.getSession();
         Long productId = parseProductId(request);
-        request.setAttribute(PRODUCT, productDao.getProduct(productId));
-        Product product = productDao.getProduct(productId);
+        request.setAttribute(PRODUCT, productDao.getEntity(productId));
+        Product product = productDao.getEntity(productId);
         request.setAttribute(PRODUCT, product);
         request.setAttribute(CART, cartService.getCart(httpSession));
         RecentViewCart recentViewCart = recentViewed.getRecentViewed(httpSession);

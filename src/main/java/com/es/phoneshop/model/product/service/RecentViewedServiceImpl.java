@@ -3,6 +3,7 @@ package com.es.phoneshop.model.product.service;
 import com.es.phoneshop.model.product.bean.Product;
 import com.es.phoneshop.model.product.bean.RecentViewCart;
 import com.es.phoneshop.model.product.dao.ArrayListProductDao;
+import com.es.phoneshop.model.product.service.implementation.RecentViewedService;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -37,7 +38,7 @@ public class RecentViewedServiceImpl implements RecentViewedService {
 
     @Override
     public synchronized void add(Long productId, RecentViewCart recentViewCart) {
-        Product product = ArrayListProductDao.getInstance().getProduct(productId);
+        Product product = ArrayListProductDao.getInstance().getEntity(productId);
         List<Product> recentProducts = recentViewCart.getItems();
         if (recentProducts.contains(product)) {
             recentProducts.remove(product);

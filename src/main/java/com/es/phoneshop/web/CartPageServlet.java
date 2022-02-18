@@ -4,10 +4,10 @@ import com.es.phoneshop.model.product.bean.Cart;
 import com.es.phoneshop.model.product.bean.CartItem;
 import com.es.phoneshop.model.product.bean.Product;
 import com.es.phoneshop.model.product.dao.ArrayListProductDao;
-import com.es.phoneshop.model.product.dao.ProductDao;
-import com.es.phoneshop.model.product.service.CartService;
+import com.es.phoneshop.model.product.dao.implementation.ProductDao;
+import com.es.phoneshop.model.product.service.implementation.CartService;
 import com.es.phoneshop.model.product.service.CartServiceImpl;
-import com.es.phoneshop.model.product.service.QuantityException;
+import com.es.phoneshop.model.product.exception.QuantityException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -72,7 +72,7 @@ public class CartPageServlet extends HttpServlet {
         Cart cart = cartService.getCart(request.getSession());
         List<Product> productsCart = new ArrayList<>();
         for (CartItem item : cart.getItems()) {
-            productsCart.add(productDao.getProduct(item.getProductId()));
+            productsCart.add(productDao.getEntity(item.getProductId()));
         }
         request.setAttribute(CART, cart);
         request.setAttribute(PRODUCTS, productsCart);
