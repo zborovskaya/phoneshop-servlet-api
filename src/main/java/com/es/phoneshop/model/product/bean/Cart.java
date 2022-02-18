@@ -8,23 +8,23 @@ import java.util.Objects;
 
 public class Cart implements Serializable {
     private List<CartItem> items;
-    private int TotalQuantity;
-    private BigDecimal TotalCost;
+    private int totalQuantity;
+    private BigDecimal totalCost;
 
     public void setTotalQuantity(int totalQuantity) {
-        TotalQuantity = totalQuantity;
+        this.totalQuantity = totalQuantity;
     }
 
     public void setTotalCost(BigDecimal totalCost) {
-        TotalCost = totalCost;
+        this.totalCost = totalCost;
     }
 
     public int getTotalQuantity() {
-        return TotalQuantity;
+        return totalQuantity;
     }
 
     public BigDecimal getTotalCost() {
-        return TotalCost;
+        return totalCost;
     }
 
     public Cart() {

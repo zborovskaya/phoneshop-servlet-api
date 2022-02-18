@@ -19,9 +19,6 @@
             There was an error adding to cart
         </div>
     </c:if>
-    <p>
-        Cart : ${cart}
-    </p>
     <form method="post" action="${pageContext.servletContext.contextPath}/products/${product.id}">
         <table>
             <tr>
@@ -60,6 +57,7 @@
                 </td>
             </tr>
         </table>
+        <br>
         <p>
             <button>Add to cart</button>
         </p>

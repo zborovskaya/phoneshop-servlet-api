@@ -19,9 +19,6 @@
             There was an error adding to cart
         </div>
     </c:if>
-    <p>
-        Cart : ${cart}
-    </p>
     <form>
         <input name="query" value="${param.query}">
         <button>Search</button>

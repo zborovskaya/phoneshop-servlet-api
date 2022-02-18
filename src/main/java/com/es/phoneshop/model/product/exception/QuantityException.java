@@ -1,4 +1,4 @@
-package com.es.phoneshop.model.product.service;
+package com.es.phoneshop.model.product.exception;
 
 public class QuantityException extends Exception {
     public QuantityException() {
