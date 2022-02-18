@@ -1,8 +1,9 @@
 package com.es.phoneshop.model.product.bean;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class CartItem {
+public class CartItem implements Serializable {
     private Long productId;
     int quantity;
 
@@ -21,6 +22,10 @@ public class CartItem {
 
     public void addQuantity(int quantity) {
         this.quantity = this.quantity + quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Override

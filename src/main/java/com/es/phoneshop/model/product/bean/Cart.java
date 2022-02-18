@@ -1,11 +1,31 @@
 package com.es.phoneshop.model.product.bean;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Cart {
+public class Cart implements Serializable {
     private List<CartItem> items;
+    private int TotalQuantity;
+    private BigDecimal TotalCost;
+
+    public void setTotalQuantity(int totalQuantity) {
+        TotalQuantity = totalQuantity;
+    }
+
+    public void setTotalCost(BigDecimal totalCost) {
+        TotalCost = totalCost;
+    }
+
+    public int getTotalQuantity() {
+        return TotalQuantity;
+    }
+
+    public BigDecimal getTotalCost() {
+        return TotalCost;
+    }
 
     public Cart() {
         this.items = new ArrayList<>();

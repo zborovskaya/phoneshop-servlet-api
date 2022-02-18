@@ -1,8 +1,8 @@
 package com.es.phoneshop.web;
 
 import com.es.phoneshop.model.product.bean.PriceHistory;
-import com.es.phoneshop.model.product.dao.ArrayListProductDao;
 import com.es.phoneshop.model.product.bean.Product;
+import com.es.phoneshop.model.product.dao.ArrayListProductDao;
 import com.es.phoneshop.model.product.dao.ProductDao;
 
 import javax.servlet.ServletContextEvent;

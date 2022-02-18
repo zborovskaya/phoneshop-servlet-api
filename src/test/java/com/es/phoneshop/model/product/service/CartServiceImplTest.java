@@ -21,7 +21,6 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
-import static org.junit.Assert.assertNotEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -29,6 +28,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CartServiceImplTest extends TestCase {
+    private final int CONSTANT_FOR_TEST_UPDATING = 3;
     private Cart cart;
     private CartService cartService = CartServiceImpl.getInstance();
     private Product product;
@@ -48,7 +48,6 @@ public class CartServiceImplTest extends TestCase {
         arrayListProductDao.save(product);
     }
 
-
     @Test
     public void givenHttpSession_WhenGetCart_ThenReturnNewCart() {
         when(httpSession.getAttribute(anyString())).thenReturn(null);
@@ -58,7 +57,8 @@ public class CartServiceImplTest extends TestCase {
         verify(httpSession).getAttribute(anyString());
         verify(httpSession).setAttribute(anyString(), any());
         assertNotNull(result);
-        assertNotEquals(cart, result);
+        assertEquals(cart, result);
+        assertFalse(cart == result);
     }
 
     @Test
@@ -111,5 +111,62 @@ public class CartServiceImplTest extends TestCase {
         NumberFormat format = NumberFormat.getInstance(locale);
 
         cartService.add(cart, product.getId(), "hhsdhfsdf", format);
+    }
+
+    @Test
+    public void givenCartWithProductIdWithQuantityWithFormatRU_WhenUpdate_ThenUpdatingCart()
+            throws QuantityException {
+        Locale locale = new Locale("ru", "RU");
+        NumberFormat format = NumberFormat.getInstance(locale);
+        Cart cartExpected = new Cart();
+        List<CartItem> cartItemList = cartExpected.getItems();
+        cartItemList.add(new CartItem(product.getId(), CONSTANT_FOR_TEST_UPDATING));
+        cart.getItems().add(new CartItem(product.getId(), 1));
+
+        cartService.update(cart, product.getId(), String.valueOf(CONSTANT_FOR_TEST_UPDATING), format);
+
+        assertEquals(cartExpected, cart);
+    }
+
+    @Test(expected = QuantityException.class)
+    public void givenCartWithProductIdWithQuantityOutOfStockWithFormatEN_WhenUpdate_ThenUpdatingCart()
+            throws QuantityException {
+        Locale locale = new Locale("en", "EN");
+        NumberFormat format = NumberFormat.getInstance(locale);
+        cart.getItems().add(new CartItem(product.getId(), 1));
+
+        cartService.update(cart, product.getId(), "1,000", format);
+    }
+
+    @Test(expected = QuantityException.class)
+    public void givenCartWithProductIdWithQuantityOutOfStockWithFormatRU_WhenUpdate_ThenUpdatingCart()
+            throws QuantityException {
+        Locale locale = new Locale("ru", "RU");
+        NumberFormat format = NumberFormat.getInstance(locale);
+        cart.getItems().add(new CartItem(product.getId(), 1));
+
+        cartService.update(cart, product.getId(), "109", format);
+    }
+
+    @Test(expected = QuantityException.class)
+    public void givenCartWithProductIdWithQuantityNotNumberWithFormatRU_WhenUpdate_ThenUpdatingCart()
+            throws QuantityException {
+        Locale locale = new Locale("ru", "RU");
+        NumberFormat format = NumberFormat.getInstance(locale);
+        cart.getItems().add(new CartItem(product.getId(), 1));
+
+        cartService.update(cart, product.getId(), "hhsdhfsdf", format);
+    }
+
+    @Test
+    public void givenCartWithProductId_WhenDelete_ThenDeleteItem()
+            throws QuantityException {
+        Long id = product.getId();
+        cart.getItems().add(new CartItem(id, 1));
+        Cart cartExpected = new Cart();
+
+        cartService.delete(cart, id);
+
+        assertEquals(cartExpected, cart);
     }
 }
