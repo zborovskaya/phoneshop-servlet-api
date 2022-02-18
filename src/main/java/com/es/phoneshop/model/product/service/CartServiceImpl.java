@@ -99,7 +99,7 @@ public class CartServiceImpl implements CartService {
             cart.setTotalCost(null);
         } else {
             List<CartItem> cartItemList = cart.getItems();
-            BigDecimal cost= BigDecimal.valueOf(0);
+            BigDecimal cost = BigDecimal.valueOf(0);
             for (CartItem item : cartItemList) {
                 cost = cost.add(productDao.getProduct(item.getProductId()).getPrice()
                         .multiply(BigDecimal.valueOf(item.getQuantity())));
