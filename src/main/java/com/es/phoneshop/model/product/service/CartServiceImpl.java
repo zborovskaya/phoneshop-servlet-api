@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CartServiceImpl implements CartService {
-    private static final String NOT_NUMBER = "Not a number";
+    private static final String INCORRECT_QUANTITY = "Incorrect quantity";
     private static final String OUT_OF_STOCK = "Out of stock, available ";
     private static final String CART_SESSION_ATTRIBUTE = CartServiceImpl.class.getName() + ".cart";
     private static volatile CartService instance;
@@ -116,10 +116,16 @@ public class CartServiceImpl implements CartService {
 
     private int parseQuantityToInt(String quantityString, NumberFormat format) throws QuantityException {
         int quantity;
+        if (!QuantityValidator.isNumber(quantityString)) {
+            throw new QuantityException(INCORRECT_QUANTITY);
+        }
         try {
             quantity = format.parse(quantityString).intValue();
         } catch (ParseException ex) {
-            throw new QuantityException(NOT_NUMBER);
+            throw new QuantityException(INCORRECT_QUANTITY);
+        }
+        if (quantity < 1) {
+            throw new QuantityException(INCORRECT_QUANTITY);
         }
         return quantity;
     }

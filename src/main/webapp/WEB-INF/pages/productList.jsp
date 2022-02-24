@@ -47,38 +47,36 @@
         </thead>
         <c:forEach var="product" items="${products}" varStatus="status">
             <tr>
-                <td>
-                    <img class="product-tile"
-                         src="${product.imageUrl}">
-                </td>
-                <td>
-                    <a href="${pageContext.servletContext.contextPath}/products/${product.id}">
-                            ${product.description}
-                    </a>
-                </td>
-                <td>
-                    <input name="quantity" value="${not empty error ? paramValues['quantity'][status.index] :1}"
-                           class="quantity" form="addCart">
-                    <input name="ids" value="${product.id}"
-                           type="hidden" form="addCart">
-                    <c:if test="${not empty error and product.id eq param.productId}">
-                        <div class="error">
-                                ${error}
-                        </div>
-                    </c:if>
-                </td>
-                <td class="price">
-                    <a href="${pageContext.servletContext.contextPath}/products/priceHistory?productId=${product.id}">
-                        <fmt:formatNumber value="${product.price}" type="currency"
-                                          currencySymbol="${product.currency.symbol}"/>
-                    </a>
-                </td>
-                <td>
-                    <button form="addCart"
-                            formaction="${pageContext.servletContext.contextPath}/products?productId=${product.id}">Add
-                        to cart
-                    </button>
-                </td>
+                <form method="post" action="${pageContext.servletContext.contextPath}/products?productId=${product.id}">
+                    <td>
+                        <img class="product-tile"
+                             src="${product.imageUrl}">
+                    </td>
+                    <td>
+                        <a href="${pageContext.servletContext.contextPath}/products/${product.id}">
+                                ${product.description}
+                        </a>
+                    </td>
+                    <td>
+                        <input name="quantity"
+                               value="${not empty error and product.id eq param.productId ? param['quantity'] :1}"
+                               class="quantity">
+                        <c:if test="${not empty error and product.id eq param.productId}">
+                            <div class="error">
+                                    ${error}
+                            </div>
+                        </c:if>
+                    </td>
+                    <td class="price">
+                        <a href="${pageContext.servletContext.contextPath}/products/priceHistory?productId=${product.id}">
+                            <fmt:formatNumber value="${product.price}" type="currency"
+                                              currencySymbol="${product.currency.symbol}"/>
+                        </a>
+                    </td>
+                    <td>
+                        <button>Add to cart</button>
+                    </td>
+                </form>
             </tr>
         </c:forEach>
     </table>

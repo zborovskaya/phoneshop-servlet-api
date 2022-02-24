@@ -52,7 +52,6 @@ public class ProductDetailsPageServlet extends HttpServlet {
         String quantityString = request.getParameter(QUANTITY);
         Long productId = parseProductId(request);
         try {
-            request.getLocale();
             Cart cart = cartService.getCart(request.getSession());
             cartService.add(cart, productId, quantityString, NumberFormat.getInstance(request.getLocale()));
             response.sendRedirect(request.getContextPath() + "/products/" + productId + PRODUCT_ADDED);
