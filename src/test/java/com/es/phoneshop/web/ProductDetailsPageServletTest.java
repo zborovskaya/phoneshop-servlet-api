@@ -2,7 +2,7 @@ package com.es.phoneshop.web;
 
 import com.es.phoneshop.model.product.bean.PriceHistory;
 import com.es.phoneshop.model.product.bean.Product;
-import com.es.phoneshop.model.product.dao.ProductDao;
+import com.es.phoneshop.model.product.dao.implementation.ProductDao;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,7 +53,7 @@ public class ProductDetailsPageServletTest {
         when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
         when(request.getPathInfo()).thenReturn("/1");
         WhiteboxImpl.setInternalState(servlet, "productDao", mockProductDao);
-        when(mockProductDao.getProduct( anyLong())).thenReturn(product);
+        when(mockProductDao.getEntity( anyLong())).thenReturn(product);
     }
 
     @Test

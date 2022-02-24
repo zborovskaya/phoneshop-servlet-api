@@ -2,6 +2,7 @@ package com.es.phoneshop.model.product.dao;
 
 import com.es.phoneshop.model.product.bean.PriceHistory;
 import com.es.phoneshop.model.product.bean.Product;
+import com.es.phoneshop.model.product.dao.implementation.ProductDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -25,7 +26,7 @@ public class ProductDaoSavingTest {
 
     @Test
     public void save() {
-        WhiteboxImpl.setInternalState(productDao, "products", spyProducts);
+        WhiteboxImpl.setInternalState(productDao, "dataResource", spyProducts);
         Currency usd = Currency.getInstance("USD");
         Product product = new Product("sgs", "Samsung Galaxy S", new PriceHistory(LocalDate.now(),
                 new BigDecimal(100)), usd, 100,
