@@ -4,8 +4,8 @@ import com.es.phoneshop.model.product.bean.Cart;
 import com.es.phoneshop.model.product.bean.CartItem;
 import com.es.phoneshop.model.product.bean.PriceHistory;
 import com.es.phoneshop.model.product.bean.Product;
-import com.es.phoneshop.model.product.dao.ProductDao;
-import com.es.phoneshop.model.product.service.CartService;
+import com.es.phoneshop.model.product.dao.implementation.ProductDao;
+import com.es.phoneshop.model.product.service.implementation.CartService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,7 +67,7 @@ public class CartPageServletTest {
         when(request.getSession()).thenReturn(httpSession);
         WhiteboxImpl.setInternalState(servlet, "productDao", mockProductDao);
         WhiteboxImpl.setInternalState(servlet, "cartService", mockCartService);
-        when(mockProductDao.getProduct(anyLong())).thenReturn(product);
+        when(mockProductDao.getEntity(anyLong())).thenReturn(product);
         cart.getItems().add(new CartItem(product.getId(), 1));
         when(mockCartService.getCart(httpSession)).thenReturn(cart);
     }

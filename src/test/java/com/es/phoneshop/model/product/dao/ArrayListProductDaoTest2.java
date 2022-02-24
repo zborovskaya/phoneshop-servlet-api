@@ -2,6 +2,7 @@ package com.es.phoneshop.model.product.dao;
 
 import com.es.phoneshop.model.product.bean.PriceHistory;
 import com.es.phoneshop.model.product.bean.Product;
+import com.es.phoneshop.model.product.dao.implementation.ProductDao;
 import com.es.phoneshop.model.product.exception.ProductNotFoundException;
 import com.es.phoneshop.web.DemoDataContextListener;
 import org.junit.Before;
@@ -49,7 +50,7 @@ public class ArrayListProductDaoTest2 {
 
     @Test
     public void getProduct() {
-        result = productDao.getProduct(1L);
+        result = productDao.getEntity(1L);
         assertEquals(result, product1);
     }
 
@@ -71,7 +72,7 @@ public class ArrayListProductDaoTest2 {
 
     @Test(expected = ProductNotFoundException.class)
     public void getNotFoundProduct() throws ProductNotFoundException {
-        productDao.getProduct(100L);
+        productDao.getEntity(100L);
         System.out.println(4);
     }
 }

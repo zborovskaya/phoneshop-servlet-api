@@ -1,4 +1,4 @@
-package com.es.phoneshop.model.product.service;
+package com.es.phoneshop.model.product.service.implementation;
 
 import com.es.phoneshop.model.product.bean.RecentViewCart;
 
