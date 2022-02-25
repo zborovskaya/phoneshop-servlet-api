@@ -28,6 +28,9 @@ public class ProductDetailsPageServlet extends HttpServlet {
     private static final String CART = "cart";
     private static final String RECENT_VIEWED = "recentViewed";
     private static final String ERROR = "error";
+    private static final String EQUALS = "=";
+    private static final String AMPERSAND = "&";
+    private static final String QUESTION_MARK = "?";
     private ProductDao productDao;
     private CartService cartService;
     private RecentViewedService recentViewed;
@@ -57,7 +60,9 @@ public class ProductDetailsPageServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/products/" + productId + PRODUCT_ADDED);
         } catch (QuantityException ex) {
             request.setAttribute(ERROR, ex.getMessage());
-            doGet(request, response);
+            response.sendRedirect(request.getContextPath() + "/products/" + productId
+                    + QUESTION_MARK + QUANTITY + EQUALS + quantityString
+                    + AMPERSAND + ERROR + EQUALS + ex.getMessage());
         }
     }
 

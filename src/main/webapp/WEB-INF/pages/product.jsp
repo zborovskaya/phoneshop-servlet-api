@@ -14,7 +14,7 @@
                 ${param.message}
         </div>
     </c:if>
-    <c:if test="${not empty error}">
+    <c:if test="${not empty param.error}">
         <div class="error">
             There was an error adding to cart
         </div>
@@ -48,10 +48,10 @@
                     quantity
                 </td>
                 <td>
-                    <input name="quantity" value="${not empty error ? param.quantity : 1}" class="quantity">
-                    <c:if test="${not empty error}">
+                    <input name="quantity" value="${not empty param.error ? param.quantity : 1}" class="quantity">
+                    <c:if test="${not empty param.error}">
                         <div class="error">
-                                ${error}
+                                ${param.error}
                         </div>
                     </c:if>
                 </td>

@@ -64,7 +64,7 @@
                             <fmt:formatNumber value="${cart.items.get(status.index).quantity}" var="quantity"/>
                             <c:set var="error" value="${errors[product.id]}"/>
                             <input name="quantity"
-                                   value="${not empty error ? paramValues['quantity'][status.index] :quantity}"
+                                   value="${not empty error ? quantityError[product.id] :quantity}"
                                    class="quantity">
                             <input name="productId" value="${product.id}" type="hidden">
                             <c:if test="${not empty error}">

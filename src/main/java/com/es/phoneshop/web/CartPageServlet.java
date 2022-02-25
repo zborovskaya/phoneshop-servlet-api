@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class CartPageServlet extends HttpServlet {
     private static final String PRODUCT_ID = "productId";
     private static final String CART = "cart";
     private static final String ERRORS = "errors";
+    private static final String QUANTITY_ERROR = "quantityError";
     private ProductDao productDao;
     private CartService cartService;
 
@@ -48,9 +50,11 @@ public class CartPageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<Long, String> errors = new HashMap<>();
+        Map<Long, String> errorsQuantity = new HashMap<>();
         String[] quantitiesString = request.getParameterValues(QUANTITY);
         String[] productsId = request.getParameterValues(PRODUCT_ID);
-        Cart cart = cartService.getCart(request.getSession());
+        HttpSession httpSession = request.getSession();
+        Cart cart = cartService.getCart(httpSession);
         for (int i = 0; i < productsId.length; i++) {
             Long productId = Long.valueOf(productsId[i]);
             try {
@@ -58,17 +62,30 @@ public class CartPageServlet extends HttpServlet {
                         NumberFormat.getInstance(request.getLocale()));
             } catch (QuantityException ex) {
                 errors.put(productId, ex.getMessage());
-                request.setAttribute(ERRORS, errors);
+                errorsQuantity.put(productId, quantitiesString[i]);
+                httpSession.setAttribute(ERRORS, errors);
+                httpSession.setAttribute(QUANTITY_ERROR, errorsQuantity);
             }
         }
         if (errors.isEmpty()) {
             response.sendRedirect(request.getContextPath() + "/cart" + PRODUCT_UPDATE);
         } else {
-            doGet(request, response);
+            response.sendRedirect(request.getContextPath() + "/cart");
         }
     }
 
     private void setAttribute(HttpServletRequest request) {
+        HttpSession httpSession = request.getSession();
+        Map<Long, String> errors = (Map<Long, String>) httpSession.getAttribute(ERRORS);
+        Map<Long, String> quantityString = (Map<Long, String>) httpSession.getAttribute(QUANTITY_ERROR);
+        if (errors != null) {
+            request.setAttribute(ERRORS, errors);
+            httpSession.removeAttribute(ERRORS);
+        }
+        if (quantityString != null) {
+            request.setAttribute(QUANTITY_ERROR, quantityString);
+            httpSession.removeAttribute(QUANTITY_ERROR);
+        }
         Cart cart = cartService.getCart(request.getSession());
         List<Product> productsCart = new ArrayList<>();
         for (CartItem item : cart.getItems()) {

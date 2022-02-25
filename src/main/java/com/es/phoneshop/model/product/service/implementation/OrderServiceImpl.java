@@ -32,12 +32,12 @@ public class OrderServiceImpl implements OrderService {
     public Order getOrder(Cart cart) {
         Order order = new Order();
         order.setItems(cart.getItems()
-                .stream().map(item->{
-                  try{
-                      return item.clone();
-                  } catch (CloneNotSupportedException ex){
-                      throw new RuntimeException(ex);
-                  }
+                .stream().map(item -> {
+                    try {
+                        return item.clone();
+                    } catch (CloneNotSupportedException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }).collect(Collectors.toList()));
         order.setTotalQuantity(cart.getTotalQuantity());
         order.setSubTotalCost(cart.getTotalCost());
@@ -52,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
         orderDao.save(order);
     }
 
-    private BigDecimal calculateDeliveryCost(){
+    private BigDecimal calculateDeliveryCost() {
         return new BigDecimal(5);
-   }
+    }
 }
