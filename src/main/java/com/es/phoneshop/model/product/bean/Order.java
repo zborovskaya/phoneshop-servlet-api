@@ -137,6 +137,7 @@ public class Order extends GenericBean implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(secureId, items, subTotalCost, deliveryCost, totalCost, totalQuantity, firstName, lastName, phone, deliveryAddress, deliveryDate, paymentMethod);
+        return Objects.hash(secureId, items, subTotalCost, deliveryCost, totalCost, totalQuantity, firstName,
+                lastName, phone, deliveryAddress, deliveryDate, paymentMethod);
     }
 }

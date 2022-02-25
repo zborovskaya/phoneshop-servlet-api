@@ -89,12 +89,13 @@
         </h2>
         <table>
             <tags:orderFormRow name="firstName" label="First name" order="${order}"
-                               errors="${errors}"></tags:orderFormRow>
+                               errors="${errors}" nameValues="${nameValues}"></tags:orderFormRow>
             <tags:orderFormRow name="lastName" label="Last name" order="${order}"
-                               errors="${errors}"></tags:orderFormRow>
-            <tags:orderFormRow name="phone" label="Phone" order="${order}" errors="${errors}"></tags:orderFormRow>
+                               errors="${errors}" nameValues="${nameValues}"></tags:orderFormRow>
+            <tags:orderFormRow name="phone" label="Phone" order="${order}" errors="${errors}"
+                               nameValues="${nameValues}"></tags:orderFormRow>
             <tags:orderFormRow name="deliveryAddress" label="Delivery address" order="${order}"
-                               errors="${errors}"></tags:orderFormRow>
+                               errors="${errors}" nameValues="${nameValues}"></tags:orderFormRow>
             <tr>
                 <td>Delivery Date<span style="color:red">*</span></td>
                 <td>
@@ -115,10 +116,10 @@
                     <select name="paymentMethod">
                         <option></option>
                         <c:forEach var="paymentMethod" items="${paymentMethods}">
-                            <c:if test="${param.paymentMethod eq paymentMethod.name()}">
+                            <c:if test="${order.paymentMethod eq paymentMethod.name()}">
                                 <option selected>${paymentMethod}</option>
                             </c:if>
-                            <c:if test="${not (param.paymentMethod eq paymentMethod.name())}">
+                            <c:if test="${not (order.paymentMethod eq paymentMethod.name())}">
                                 <option>${paymentMethod}</option>
                             </c:if>
                         </c:forEach>

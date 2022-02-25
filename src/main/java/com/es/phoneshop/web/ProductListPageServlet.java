@@ -31,8 +31,9 @@ public class ProductListPageServlet extends HttpServlet {
     private static final String PRODUCTS = "products";
     private static final String SORT = "sort";
     private static final String ORDER = "order";
-    private static final String IDS = "ids";
     private static final String QUANTITY = "quantity";
+    private static final String EQUALS = "=";
+    private static final String AMPERSAND = "&";
     private static final String PRODUCT_ID = "productId";
     private static final String CART = "cart";
     private static final String ERROR = "error";
@@ -50,6 +51,28 @@ public class ProductListPageServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        setAttribute(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/productList.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String quantityString = request.getParameter(QUANTITY);
+        String productIdString = request.getParameter(PRODUCT_ID);
+        Long productId = Long.valueOf(productIdString);
+        request.getLocale();
+        Cart cart = cartService.getCart(request.getSession());
+        try {
+            cartService.add(cart, productId, quantityString, NumberFormat.getInstance(request.getLocale()));
+            response.sendRedirect(request.getContextPath() + "/products" + PRODUCT_ADDED);
+        } catch (QuantityException ex) {
+            response.sendRedirect(request.getContextPath() + "/products?" + PRODUCT_ID + EQUALS + productId
+                    + AMPERSAND + QUANTITY + EQUALS + quantityString
+                    + AMPERSAND + ERROR + EQUALS + ex.getMessage());
+        }
+    }
+
+    private void setAttribute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession httpSession = request.getSession();
         String query = request.getParameter(QUERY);
         String sortField = request.getParameter(SORT);
@@ -73,30 +96,5 @@ public class ProductListPageServlet extends HttpServlet {
         }
         Cart cart = cartService.getCart(httpSession);
         request.setAttribute(CART, cart);
-        request.getRequestDispatcher("/WEB-INF/pages/productList.jsp").forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String[] quantitiesString = request.getParameterValues(QUANTITY);
-        String[] ids = request.getParameterValues(IDS);
-        String productIdString = request.getParameter(PRODUCT_ID);
-        int index = 0;
-        for (int i = 0; i < ids.length; i++) {
-            if (productIdString.equals(ids[i])) {
-                index = i;
-                break;
-            }
-        }
-        Long productId = Long.valueOf(productIdString);
-        request.getLocale();
-        Cart cart = cartService.getCart(request.getSession());
-        try {
-            cartService.add(cart, productId, quantitiesString[index], NumberFormat.getInstance(request.getLocale()));
-            response.sendRedirect(request.getContextPath() + "/products" + PRODUCT_ADDED);
-        } catch (QuantityException ex) {
-            request.setAttribute(ERROR, ex.getMessage());
-            doGet(request, response);
-        }
     }
 }
