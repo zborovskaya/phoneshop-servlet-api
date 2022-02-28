@@ -1,5 +1,6 @@
 package com.es.phoneshop.model.product.service;
 
+import com.es.phoneshop.model.product.service.implementation.QuantityValidator;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;

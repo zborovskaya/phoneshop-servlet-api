@@ -1,9 +1,9 @@
-package com.es.phoneshop.model.product.service;
+package com.es.phoneshop.model.product.service.implementation;
 
 import com.es.phoneshop.model.product.bean.Product;
 import com.es.phoneshop.model.product.bean.RecentViewCart;
 import com.es.phoneshop.model.product.dao.ArrayListProductDao;
-import com.es.phoneshop.model.product.service.implementation.RecentViewedService;
+import com.es.phoneshop.model.product.service.RecentViewedService;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;

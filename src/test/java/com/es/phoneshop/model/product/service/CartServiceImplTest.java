@@ -7,7 +7,7 @@ import com.es.phoneshop.model.product.bean.Product;
 import com.es.phoneshop.model.product.dao.ArrayListProductDao;
 import com.es.phoneshop.model.product.dao.implementation.ProductDao;
 import com.es.phoneshop.model.product.exception.QuantityException;
-import com.es.phoneshop.model.product.service.implementation.CartService;
+import com.es.phoneshop.model.product.service.implementation.CartServiceImpl;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;

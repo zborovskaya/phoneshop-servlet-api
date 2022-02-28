@@ -1,6 +1,6 @@
 package com.es.phoneshop.model.product.bean;
 
-import com.es.phoneshop.model.product.service.PaymentMethod;
+import com.es.phoneshop.model.product.service.implementation.PaymentMethod;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

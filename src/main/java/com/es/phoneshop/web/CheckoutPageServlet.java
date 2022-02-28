@@ -6,12 +6,12 @@ import com.es.phoneshop.model.product.bean.Order;
 import com.es.phoneshop.model.product.bean.Product;
 import com.es.phoneshop.model.product.dao.ArrayListProductDao;
 import com.es.phoneshop.model.product.dao.implementation.ProductDao;
-import com.es.phoneshop.model.product.service.ClientInfoValidator;
-import com.es.phoneshop.model.product.service.OrderServiceImpl;
-import com.es.phoneshop.model.product.service.PaymentMethod;
-import com.es.phoneshop.model.product.service.CartServiceImpl;
-import com.es.phoneshop.model.product.service.implementation.CartService;
-import com.es.phoneshop.model.product.service.implementation.OrderService;
+import com.es.phoneshop.model.product.service.implementation.OrderFormValidator;
+import com.es.phoneshop.model.product.service.implementation.OrderServiceImpl;
+import com.es.phoneshop.model.product.service.implementation.PaymentMethod;
+import com.es.phoneshop.model.product.service.implementation.CartServiceImpl;
+import com.es.phoneshop.model.product.service.CartService;
+import com.es.phoneshop.model.product.service.OrderService;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -32,8 +32,14 @@ public class CheckoutPageServlet extends HttpServlet {
     private static final String ORDER = "order";
     private static final String ERRORS = "errors";
     private static final String NAME_VALUES = "nameValues";
+    private static final String FIRST_NAME = "firstName";
+    private static final String LAST_NAME = "lastName";
+    private static final String DELIVERY_ADDRESS = "deliveryAddress";
+    private static final String PHONE = "phone";
     private static final String PAYMENT_METHODS = "paymentMethods";
-    private static final String VALUE_IS_REQUIRED = "Value is required";
+    private static final String PAYMENT_METHOD = "paymentMethod";
+    private static final String DELIVERY_DATE = "deliveryDate";
+    private static final String INVALID_VALUE = "Invalid value";
     private ProductDao productDao;
     private CartService cartService;
     private OrderService orderService;
@@ -61,10 +67,10 @@ public class CheckoutPageServlet extends HttpServlet {
         Cart cart = cartService.getCart(request.getSession());
         Order order = orderService.getOrder(cart);
 
-        setNameValue(request, "firstName", errors, nameValues, order::setFirstName);
-        setNameValue(request, "lastName", errors, nameValues, order::setLastName);
-        setPhoneValue(request, "phone", errors, nameValues, order::setPhone);
-        setRequiredValue(request, "deliveryAddress", errors, nameValues, order::setDeliveryAddress);
+        setNameValue(request, FIRST_NAME, errors, nameValues, order::setFirstName);
+        setNameValue(request, LAST_NAME, errors, nameValues, order::setLastName);
+        setPhoneValue(request, PHONE, errors, nameValues, order::setPhone);
+        setRequiredValue(request, DELIVERY_ADDRESS, errors, nameValues, order::setDeliveryAddress);
         setPaymentMethod(request, errors, nameValues, order::setPaymentMethod);
         setDeliveryDate(request, errors, nameValues, order::setDeliveryDate);
         if (errors.isEmpty()) {
@@ -83,7 +89,7 @@ public class CheckoutPageServlet extends HttpServlet {
                                   Map<String, String> nameValues, Consumer<String> consumer) {
         String value = request.getParameter(parameter);
         if (value == null || value.isEmpty()) {
-            errors.put(parameter, VALUE_IS_REQUIRED);
+            errors.put(parameter, INVALID_VALUE);
             nameValues.put(parameter, value);
         } else {
             consumer.accept(value);
@@ -93,8 +99,8 @@ public class CheckoutPageServlet extends HttpServlet {
     private void setPhoneValue(HttpServletRequest request, String parameter, Map<String, String> errors,
                                Map<String, String> nameValues, Consumer<String> consumer) {
         String value = request.getParameter(parameter);
-        if (!ClientInfoValidator.isPhoneValid(value)) {
-            errors.put(parameter, VALUE_IS_REQUIRED);
+        if (!OrderFormValidator.isPhoneValid(value)) {
+            errors.put(parameter, INVALID_VALUE);
             nameValues.put(parameter, value);
         } else {
             consumer.accept(value);
@@ -104,8 +110,8 @@ public class CheckoutPageServlet extends HttpServlet {
     private void setNameValue(HttpServletRequest request, String parameter, Map<String, String> errors,
                               Map<String, String> nameValues, Consumer<String> consumer) {
         String value = request.getParameter(parameter);
-        if (!ClientInfoValidator.isNameValid(value)) {
-            errors.put(parameter, VALUE_IS_REQUIRED);
+        if (!OrderFormValidator.isNameValid(value)) {
+            errors.put(parameter, INVALID_VALUE);
             nameValues.put(parameter, value);
         } else {
             consumer.accept(value);
@@ -114,10 +120,10 @@ public class CheckoutPageServlet extends HttpServlet {
 
     private void setPaymentMethod(HttpServletRequest request, Map<String, String> errors,
                                   Map<String, String> nameValues, Consumer<PaymentMethod> consumer) {
-        String paymentMethod = request.getParameter("paymentMethod");
+        String paymentMethod = request.getParameter(PAYMENT_METHOD);
         if (paymentMethod == null || paymentMethod.isEmpty()) {
-            errors.put("paymentMethod", VALUE_IS_REQUIRED);
-            nameValues.put("paymentMethod", paymentMethod);
+            errors.put(PAYMENT_METHOD, INVALID_VALUE);
+            nameValues.put(PAYMENT_METHOD, paymentMethod);
         } else {
             consumer.accept(PaymentMethod.valueOf(paymentMethod.toUpperCase()));
         }
@@ -126,10 +132,10 @@ public class CheckoutPageServlet extends HttpServlet {
     private void setDeliveryDate(HttpServletRequest request, Map<String, String> errors,
                                  Map<String, String> nameValues, Consumer<LocalDate> consumer) {
 
-        String deliveryDate = request.getParameter("deliveryDate");
+        String deliveryDate = request.getParameter(DELIVERY_DATE);
         if (deliveryDate == null || deliveryDate.isEmpty()) {
-            errors.put("deliveryDate", VALUE_IS_REQUIRED);
-            nameValues.put("deliveryDate", deliveryDate);
+            errors.put(DELIVERY_DATE, INVALID_VALUE);
+            nameValues.put(DELIVERY_DATE, deliveryDate);
         } else {
             consumer.accept(LocalDate.parse(deliveryDate));
         }
