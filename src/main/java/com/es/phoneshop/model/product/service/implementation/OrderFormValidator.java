@@ -1,6 +1,6 @@
-package com.es.phoneshop.model.product.service;
+package com.es.phoneshop.model.product.service.implementation;
 
-public class ClientInfoValidator {
+public class OrderFormValidator {
     private final static String NAME_PATTERN = "^[A-Z][a-z]+$";
     private final static String PHONE_PATTERN = "^\\+375[0-9]{9}$";
 

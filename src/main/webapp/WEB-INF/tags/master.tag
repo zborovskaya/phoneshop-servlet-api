@@ -24,7 +24,7 @@
 </head>
 <body class="product-list">
 <header>
-    <a href="${pageContext.servletContext.contextPath}">
+    <a href="${pageContext.servletContext.contextPath}/products">
         <img src="${pageContext.servletContext.contextPath}/images/logo.svg"/>
         PhoneShop
     </a>

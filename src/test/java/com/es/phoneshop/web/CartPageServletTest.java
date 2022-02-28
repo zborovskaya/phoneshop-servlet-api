@@ -5,7 +5,7 @@ import com.es.phoneshop.model.product.bean.CartItem;
 import com.es.phoneshop.model.product.bean.PriceHistory;
 import com.es.phoneshop.model.product.bean.Product;
 import com.es.phoneshop.model.product.dao.implementation.ProductDao;
-import com.es.phoneshop.model.product.service.implementation.CartService;
+import com.es.phoneshop.model.product.service.CartService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

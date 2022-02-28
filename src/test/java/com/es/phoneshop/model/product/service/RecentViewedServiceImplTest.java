@@ -5,7 +5,7 @@ import com.es.phoneshop.model.product.bean.Product;
 import com.es.phoneshop.model.product.bean.RecentViewCart;
 import com.es.phoneshop.model.product.dao.ArrayListProductDao;
 import com.es.phoneshop.model.product.dao.implementation.ProductDao;
-import com.es.phoneshop.model.product.service.implementation.RecentViewedService;
+import com.es.phoneshop.model.product.service.implementation.RecentViewedServiceImpl;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;

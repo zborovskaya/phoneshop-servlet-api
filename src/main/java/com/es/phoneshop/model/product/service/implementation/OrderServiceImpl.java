@@ -1,10 +1,10 @@
-package com.es.phoneshop.model.product.service;
+package com.es.phoneshop.model.product.service.implementation;
 
 import com.es.phoneshop.model.product.bean.Cart;
 import com.es.phoneshop.model.product.bean.Order;
 import com.es.phoneshop.model.product.dao.ArrayListOrderDao;
 import com.es.phoneshop.model.product.dao.implementation.OrderDao;
-import com.es.phoneshop.model.product.service.implementation.OrderService;
+import com.es.phoneshop.model.product.service.OrderService;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
