@@ -5,10 +5,10 @@ import com.es.phoneshop.model.product.bean.Product;
 import com.es.phoneshop.model.product.bean.RecentViewCart;
 import com.es.phoneshop.model.product.dao.ArrayListProductDao;
 import com.es.phoneshop.model.product.dao.implementation.ProductDao;
-import com.es.phoneshop.model.product.service.implementation.CartService;
-import com.es.phoneshop.model.product.service.CartServiceImpl;
-import com.es.phoneshop.model.product.service.implementation.RecentViewedService;
-import com.es.phoneshop.model.product.service.RecentViewedServiceImpl;
+import com.es.phoneshop.model.product.service.CartService;
+import com.es.phoneshop.model.product.service.implementation.CartServiceImpl;
+import com.es.phoneshop.model.product.service.RecentViewedService;
+import com.es.phoneshop.model.product.service.implementation.RecentViewedServiceImpl;
 import com.es.phoneshop.model.product.exception.QuantityException;
 
 import javax.servlet.ServletConfig;
@@ -28,6 +28,9 @@ public class ProductDetailsPageServlet extends HttpServlet {
     private static final String CART = "cart";
     private static final String RECENT_VIEWED = "recentViewed";
     private static final String ERROR = "error";
+    private static final String EQUALS = "=";
+    private static final String AMPERSAND = "&";
+    private static final String QUESTION_MARK = "?";
     private ProductDao productDao;
     private CartService cartService;
     private RecentViewedService recentViewed;
@@ -58,7 +61,9 @@ public class ProductDetailsPageServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/products/" + productId + PRODUCT_ADDED);
         } catch (QuantityException ex) {
             request.setAttribute(ERROR, ex.getMessage());
-            doGet(request, response);
+            response.sendRedirect(request.getContextPath() + "/products/" + productId
+                    + QUESTION_MARK + QUANTITY + EQUALS + quantityString
+                    + AMPERSAND + ERROR + EQUALS + ex.getMessage());
         }
     }
 

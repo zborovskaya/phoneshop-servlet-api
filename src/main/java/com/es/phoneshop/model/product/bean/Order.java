@@ -1,6 +1,6 @@
 package com.es.phoneshop.model.product.bean;
 
-import com.es.phoneshop.model.product.service.PaymentMethod;
+import com.es.phoneshop.model.product.service.implementation.PaymentMethod;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -137,6 +137,7 @@ public class Order extends GenericBean implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(secureId, items, subTotalCost, deliveryCost, totalCost, totalQuantity, firstName, lastName, phone, deliveryAddress, deliveryDate, paymentMethod);
+        return Objects.hash(secureId, items, subTotalCost, deliveryCost, totalCost, totalQuantity, firstName,
+                lastName, phone, deliveryAddress, deliveryDate, paymentMethod);
     }
 }

@@ -1,9 +1,9 @@
-package com.es.phoneshop.model.product.service;
+package com.es.phoneshop.model.product.service.implementation;
 
 import com.es.phoneshop.model.product.bean.Product;
 
 public class QuantityValidator {
-    private final static String NUMBER_PATTERN = "[0-9]+";
+    private final static String NUMBER_PATTERN = "[0-9]+(\\,?||\\.?)[0-9]*";
 
     public static boolean isNumber(String quantity) {
         return quantity.matches(NUMBER_PATTERN);

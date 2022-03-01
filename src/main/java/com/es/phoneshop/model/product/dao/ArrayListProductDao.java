@@ -1,8 +1,8 @@
 package com.es.phoneshop.model.product.dao;
 
 import com.es.phoneshop.model.product.dao.implementation.ProductDao;
-import com.es.phoneshop.model.product.service.SortOrder;
-import com.es.phoneshop.model.product.service.SortField;
+import com.es.phoneshop.model.product.service.implementation.SortOrder;
+import com.es.phoneshop.model.product.service.implementation.SortField;
 import com.es.phoneshop.model.product.exception.ProductNotFoundException;
 import com.es.phoneshop.model.product.bean.Product;
 
