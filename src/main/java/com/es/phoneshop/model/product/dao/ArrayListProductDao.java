@@ -6,6 +6,7 @@ import com.es.phoneshop.model.product.service.implementation.SortField;
 import com.es.phoneshop.model.product.exception.ProductNotFoundException;
 import com.es.phoneshop.model.product.bean.Product;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -64,6 +65,18 @@ public class ArrayListProductDao extends GenericDaoImpl<Product> implements Prod
         return productsFinding;
     }
 
+    @Override
+    public List<Product> findProducts(String code, BigDecimal minPrice, BigDecimal maxPrice, Integer minStock) {
+        readLock.lock();
+        List<Product> productsFinding = dataResource.stream()
+                .filter(product -> code == null ||code.isEmpty()|| product.getCode().toLowerCase().contains(code))
+                .filter(product -> minPrice == null || (product.getPrice().compareTo(minPrice)!=-1 ? true:false))
+                .filter(product -> maxPrice == null || (product.getPrice().compareTo(maxPrice)!=1 ? true:false))
+                .filter(product -> minStock == null || (product.getStock()>=minStock))
+                .collect(Collectors.toList());
+        readLock.unlock();
+        return productsFinding;
+    }
 
     @Override
     public void delete(Long id) throws ProductNotFoundException {

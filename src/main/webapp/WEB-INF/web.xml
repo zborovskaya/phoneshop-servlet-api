@@ -95,6 +95,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>advancedSearch</servlet-name>
+        <servlet-class>com.es.phoneshop.web.AdvancedSearchPageServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>advancedSearch</servlet-name>
+        <url-pattern>/advanced-search</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>orderOverview</servlet-name>
         <servlet-class>com.es.phoneshop.web.OrderOverviewPageServlet</servlet-class>
     </servlet>
@@ -114,14 +124,14 @@
         <location>/WEB-INF/pages/errorOrderNotFound.jsp</location>
     </error-page>
 
-        <error-page>
-            <error-code>500</error-code>
-            <location>/WEB-INF/pages/error.jsp</location>
-        </error-page>
+<!--        <error-page>-->
+<!--            <error-code>500</error-code>-->
+<!--            <location>/WEB-INF/pages/error.jsp</location>-->
+<!--        </error-page>-->
 
-    <error-page>
-        <error-code>404</error-code>
-        <location>/WEB-INF/pages/pageNotFound.jsp</location>
-    </error-page>
+<!--    <error-page>-->
+<!--        <error-code>404</error-code>-->
+<!--        <location>/WEB-INF/pages/pageNotFound.jsp</location>-->
+<!--    </error-page>-->
 
 </web-app>
